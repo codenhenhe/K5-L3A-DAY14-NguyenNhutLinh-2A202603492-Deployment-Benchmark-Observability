@@ -3,7 +3,7 @@
 # ============================================================
 
 # Stage 1: Builder
-FROM python:3.11-slim AS builder
+FROM python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c AS builder
 
 WORKDIR /build
 COPY requirements.txt .
@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 
 
 # Stage 2: Runtime
-FROM python:3.11-slim AS runtime
+FROM python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c AS runtime
 
 RUN groupadd -r agent && useradd -r -g agent -d /app agent
 
@@ -26,6 +26,7 @@ RUN chown -R agent:agent /app
 USER agent
 
 ENV PATH=/home/agent/.local/bin:$PATH
+ENV PYTHONUSERBASE=/home/agent/.local
 ENV PYTHONPATH=/app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
