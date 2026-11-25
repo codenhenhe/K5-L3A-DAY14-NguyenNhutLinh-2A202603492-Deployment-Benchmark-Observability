@@ -1,8 +1,10 @@
 # Benchmark & Observability Report — Day 14
 
-**Họ tên:** Nguyen Nhut Linh  
+**Họ tên:** Nguyễn Nhựt Linh
 **Ngày chạy:** 2026-11-25 (GMT+7)  
-**Môi trường:** Linux x86_64, Intel Core 5 210H, 12 CPU logic, Python 3.11.18. Agent v1 chạy ở cổng `8001`, agent v2 ở cổng `8002`, model `mock-llm-small`.
+**Môi trường:** Linux x86_64, Intel Core 5 210H. Docker Engine 29.10.0, 12 CPU logic và 14,6 GiB RAM.
+
+Bản develop chạy bằng Python 3.11.18. Agent v1 dùng cổng `8001`, agent v2 dùng cổng `8002`. Model mặc định là `mock-llm-small`.
 
 ---
 
@@ -115,10 +117,15 @@ Các JSON để nộp nằm trong [`reports/`](reports/).
 
 Locust duy trì 30 người dùng trên 2 replica. Thời gian tính từ lúc chạy lệnh áp dụng cấu hình đến lần đầu Prometheus API trả trạng thái `firing`, với chu kỳ kiểm tra 1 giây. Giữ `MOCK_ERROR_RATE=0.2` khi chạy B để quan sát cả hai alert cùng `firing`. `promtool test rules` trả `SUCCESS`. [Dữ liệu đo từ Prometheus](reports/alert_experiments.json).
 
+A và B là hai thí nghiệm đã chạy. C, D và E ghi kết quả dự kiến theo [hướng dẫn thí nghiệm](06-lab-complete/benchmark-observability/README.md#26-bài-tập--phá-hệ-thống-và-quan-sát).
+
 | # | Thay đổi | Alert nào firing | Thời gian từ lúc đổi → firing | Panel nào phản ánh rõ nhất |
 |---|---|---|---|---|
 | A | `MOCK_ERROR_RATE=0.2` | `AgentHighErrorRate` | 81,7 giây | [Error rate](screenshots/grafana-alert-a.png). Tỷ lệ `5xx` trên `/ask` đạt 21,43% lúc alert firing sau khi vượt 5% liên tục 1 phút. [Prometheus](screenshots/prometheus-alert-a.png). |
 | B | `MOCK_SLOW_RATE=0.3` | `AgentHighLatencyP95` | 146,3 giây | [Latency p95](screenshots/grafana-alert-b.png). P95 của `/ask` tăng từ 292 ms ở A lên 1,89 giây ở B. Điều kiện vượt 1 giây kéo dài 2 phút trước khi alert firing. |
+| C | `LLM_MODEL=mock-llm-large` | Dự kiến `LLMCostBurnRateHigh` | Chưa đo | Cost burn rate (USD/giờ) |
+| D | `docker pause` 1 instance | Dự kiến `AgentInstanceDown` | Chưa đo | Instances up |
+| E | `AGENT_VERSION=v1` | Dự kiến không có alert | Chưa đo | Retrieval hit ratio (agent v2) và Phiên bản đang chạy |
 
 **Thí nghiệm E không làm alert nào firing. Bạn sẽ phát hiện loại sự cố này trong production bằng cách nào?**
 

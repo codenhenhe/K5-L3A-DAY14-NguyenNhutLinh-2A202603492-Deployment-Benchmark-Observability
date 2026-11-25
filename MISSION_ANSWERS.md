@@ -320,11 +320,11 @@ Kết quả chạy `python check_production_ready.py` trong `06-lab-complete/` v
 
 ## AI log
 
-- **CP1.** Nhờ Codex chạy thử `curl` cho bản develop, chép output và đối chiếu Exercise 1.1–1.3 với mã nguồn và tiêu chí chấm. Codex bổ sung phân tích anti-pattern và bảng so sánh có số dòng. Tôi tự chạy lại `curl` trên bản develop để lấy output cho Exercise 1.2 và kiểm tra `/health`, `/ready`, `/ask` trên bản production.
-- **CP2.** Nhờ Codex thực hiện Exercise 2.1–2.4 và điền Part 2. Codex đọc Dockerfile và Compose, build hai image, đo kích thước bằng Docker và kiểm tra các endpoint bằng `curl` trên máy làm bài. Bảng kích thước và kết quả HTTP lấy từ các lệnh đã chạy.
-- **CP3.** Nhờ Codex thực hiện Exercise 4.1–4.4. Codex đọc mã mẫu, kiểm thử API key và JWT bằng `curl` trên localhost, đối chiếu 20 mã HTTP của bài rate limit và ghi lại cách thiết kế cost guard. Báo cáo dùng output đã chạy và che JWT.
-- **CP4.** Nhờ Codex thực hiện Exercise 5.1–5.5. Codex gọi `/health` và `/ready`, gửi SIGTERM trong lúc xử lý request, kiểm tra `served_by` qua Nginx và chạy `test_stateless.py`. Các mã HTTP, lượt phân phối và số tin nhắn lấy từ kết quả đã chạy.
-- **CP5.** Nhờ Codex hoàn thiện bản khung Part 6. Codex triển khai API key, rate limit và ngân sách ngày trong Redis, health/readiness, log JSON, shutdown và cấu hình Docker/Compose/Railway. Codex chạy script chấm đầy đủ với Docker và chép checklist thực tế vào Part 6.
-- **CP6.** Nhờ Codex thực hiện Part 3. Tôi xác nhận đăng nhập Railway CLI. Codex triển khai agent và Redis, cấu hình kết nối nội bộ, thực hiện bốn lệnh kiểm tra URL public và đối chiếu cấu hình Railway, Render và Cloud Run.
-- **CP7.** Nhờ Codex thực hiện Exercise 7.1–7.3. Codex bổ sung histogram, chạy load test và eval trên localhost, sửa hai mục knowledge base theo kết quả baseline, kiểm tra quality gate lần cuối và điền báo cáo từ JSON thực tế.
-- **CP8.** Nhờ Codex thực hiện Exercise 7.4–7.7. Codex chạy tải Locust, đọc dashboard Grafana, đối chiếu trace Jaeger với log JSON, kiểm thử rule bằng `promtool` và đo thời gian hai alert chuyển sang `firing`. Kết quả và ảnh được đối chiếu với dữ liệu chạy thực tế.
+- **CP1.** Tôi chạy lại `curl` trên bản develop và production, gửi kết quả thực tế và đối chiếu yêu cầu của Exercise 1.2. Tôi dùng AI để phân tích anti-pattern và hoàn thiện bảng so sánh có số dòng.
+- **CP2.** Tôi chạy Docker Compose, xem trạng thái các service và yêu cầu kiểm tra lại bản develop ở cổng `8000`. Tôi dùng AI để build và đo kích thước hai image, kiểm tra qua Nginx và tổng hợp kết quả.
+- **CP3.** Tôi làm rõ yêu cầu về API key của bài. Tôi dùng AI để thử API key, JWT và rate limit trên localhost, rồi ghi lại kết quả đã che token và cách làm cost guard.
+- **CP4.** Tôi dùng AI để kiểm tra liveness, readiness và graceful shutdown theo Part 5. Kết quả `test_stateless.py` do AI chạy cho thấy số instance phục vụ và lịch sử chat trong Redis.
+- **CP5.** Tôi yêu cầu hoàn thiện agent trong bản khung Part 6 và chạy script chấm chính thức. Tôi dùng AI để triển khai các mục TODO và ghi lại checklist thực tế từ lần chạy Docker.
+- **CP6.** Tôi đăng nhập Railway, kiểm tra dashboard, chạy bốn lệnh thử URL public và chụp ảnh kết quả. Tôi dùng AI để triển khai agent và Redis, rồi tóm tắt phần so sánh Railway, Render và Cloud Run.
+- **CP7.** Tôi yêu cầu đối chiếu phần benchmark với checklist của bài. Tôi dùng AI để bổ sung histogram, chạy load test và eval, sửa knowledge base theo baseline và kiểm tra quality gate từ JSON thực tế.
+- **CP8.** Tôi rà lại báo cáo theo mẫu và yêu cầu bổ sung môi trường, tỷ lệ lỗi ở Exercise 7.4 và các hàng C–E. Tôi dùng AI để chạy Locust, thu thập ảnh Grafana, Jaeger và Prometheus, đối chiếu trace với log và đo thời gian alert.
